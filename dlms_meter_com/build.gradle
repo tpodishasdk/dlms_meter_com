@@ -1,0 +1,66 @@
+plugins {
+    alias(libs.plugins.android.application)
+    id 'maven-publish'
+}
+
+android {
+    namespace 'com.tpodisha.dlms_meter_com'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId "com.tpodisha.dlms_meter_com"
+        minSdk 31
+        targetSdk 36
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    publishing {
+        singleVariant("release")
+    }
+}
+
+dependencies {
+
+    implementation libs.appcompat
+    implementation libs.material
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+
+    implementation(libs.gurux.dlms) {
+        exclude group: "org.gurux", module: "gurux.common"
+    }
+    implementation "com.github.mik3y:usb-serial-for-android:3.9.0"
+    releaseImplementation(libs.guruxDlmsAndroid)
+    implementation(libs.gurux.serial.android) {
+        exclude group: "org.gurux", module: "gurux.common"
+    }
+    implementation "org.gurux:gurux.common.android:3.0.4"
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.gitlab.pratim1988'
+                artifactId = 'dlms_meter_Com'
+                version = '1.0.0'
+            }
+        }
+    }
+}
