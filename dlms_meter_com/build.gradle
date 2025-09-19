@@ -57,8 +57,8 @@ afterEvaluate {
         publications {
             release(MavenPublication) {
                 from components.release
-                groupId = 'com.gitlab.pratim1988'
-                artifactId = 'dlms_meter_Com'
+                groupId = 'com.github.tpodishadk'
+                artifactId = 'dlms_meter_com'
                 version = '1.0.0'
             }
         }
